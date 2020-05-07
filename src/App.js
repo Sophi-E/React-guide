@@ -31,12 +31,18 @@ class App extends Component {
     });
   };
   render() {
+    const style = {
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer',
+    };
     return (
       <div className='App'>
         {/* {this.state.persons.map((person) => (
           <Person name={person.name} age={person.age} />
         ))} */}
-        <button onClick={this.clickHandler.bind(this, 'Jenifer')}>
+        <button style={style} onClick={this.clickHandler.bind(this, 'Jenifer')}>
           Change state
         </button>
         <Person
