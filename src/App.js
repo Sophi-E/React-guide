@@ -2,63 +2,34 @@ import React, { Component } from 'react';
 
 import './App.css';
 import Person from './components/Person/Person';
+import UserOutput from './components/UserOutput/UserOutput';
+import UserInput from './components/UserInput/UserInput';
 
 class App extends Component {
   state = {
-    persons: [
-      { name: 'Sophia', age: 26 },
-      { name: 'Victor', age: 24 },
-      { name: 'Juliet', age: 25 },
-    ],
+    username: ['sophia', 'jennifer', 'jasmine'],
   };
-  clickHandler = (newName) => {
+  handleChange = (e) => {
     this.setState({
-      persons: [
-        { name: newName, age: 29 },
-        { name: 'Victoria', age: 24 },
-        { name: 'Juliet', age: 25 },
-      ],
+      username: ['amaka', e.target.value, 'happiness'],
     });
   };
-
-  inputHandler = (e) => {
+  handleClick = () => {
     this.setState({
-      persons: [
-        { name: 'Sophie', age: 29 },
-        { name: e.target.value, age: 24 },
-        { name: 'Juliet', age: 25 },
-      ],
+      username: ['amaka', 'caro', 'happiness'],
     });
   };
   render() {
-    const style = {
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-    };
     return (
       <div className='App'>
-        {/* {this.state.persons.map((person) => (
-          <Person name={person.name} age={person.age} />
-        ))} */}
-        <button style={style} onClick={this.clickHandler.bind(this, 'Jenifer')}>
-          Change state
-        </button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
+        <button onClick={this.handleClick}>Click me!</button>
+        <UserInput
+          changed={this.handleChange}
+          currentName={this.state.username[1]}
         />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.clickHandler.bind(this, 'Jessica')}
-          changed={this.inputHandler}
-        />
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}
-        />
+        <UserOutput username={this.state.username[0]} />
+        <UserOutput username={this.state.username[1]} />
+        <UserOutput username={this.state.username[2]} />
       </div>
     );
   }
