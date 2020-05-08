@@ -2,34 +2,66 @@ import React, { Component } from 'react';
 
 import './App.css';
 import Person from './components/Person/Person';
-import UserOutput from './components/UserOutput/UserOutput';
-import UserInput from './components/UserInput/UserInput';
 
 class App extends Component {
   state = {
-    username: ['sophia', 'jennifer', 'jasmine'],
+    persons: [
+      { name: 'Sophia', age: 26 },
+      { name: 'Victor', age: 24 },
+      { name: 'Juliet', age: 25 },
+    ],
+    showPersons: false,
   };
-  handleChange = (e) => {
+  clickHandler = (newName) => {
     this.setState({
-      username: ['amaka', e.target.value, 'happiness'],
+      persons: [
+        { name: newName, age: 29 },
+        { name: 'Victoria', age: 24 },
+        { name: 'Juliet', age: 25 },
+      ],
     });
   };
-  handleClick = () => {
+
+  inputHandler = (e) => {
     this.setState({
-      username: ['amaka', 'caro', 'happiness'],
+      persons: [
+        { name: 'Sophie', age: 29 },
+        { name: e.target.value, age: 24 },
+        { name: 'Juliet', age: 25 },
+      ],
     });
+  };
+  toggleHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow });
+  };
+  deletePerson = (personIndex) => {
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
   };
   render() {
+    const style = {
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer',
+    };
     return (
       <div className='App'>
-        <button onClick={this.handleClick}>Click me!</button>
-        <UserInput
-          changed={this.handleChange}
-          currentName={this.state.username[1]}
-        />
-        <UserOutput username={this.state.username[0]} />
-        <UserOutput username={this.state.username[1]} />
-        <UserOutput username={this.state.username[2]} />
+        {this.state.showPersons
+          ? this.state.persons.map((person, index) => (
+              <Person
+                key={index}
+                name={person.name}
+                age={person.age}
+                click={this.deletePerson}
+              />
+            ))
+          : null}
+        <button style={style} onClick={this.toggleHandler}>
+          Change state
+        </button>
       </div>
     );
   }
